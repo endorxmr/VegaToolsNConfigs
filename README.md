@@ -1,7 +1,11 @@
 # VegaToolsNConfigs
 AMD Vega GPU tools and configuration file(s) for Monero(XMR) mining.
 
-VegaUbuntuGuide - How to setup Vega mining in Ubuntu.
+VegaUbuntuGuide - How to manually setup Vega mining in Ubuntu.
+
+VegaUbuntuGuidWithAutoTools - How to setup Vega mining in Ubuntu with 90% automation.  Escentially the same as VegaUbuntuGuide but after a few manual downloads, run the scripts to setup.
+
+History - Addition(s) and changes by date.
 
 TestedHarware - Limited hardware list working or not.
 
@@ -15,6 +19,8 @@ config/PPTDIR folder - contains
 
 tools folder - contains shell scripts for fan speed, overclocking, monitoring and setting PPT.
 
+tools/rigmonitor folder - contains rig monitoring scripts using passwordless ssh method.
+
 Binary file checksums:
 1.   b959ad1ffd296a8c5c75d1eb9e11e467  V56PPT
 2.   4c9fc25157f392e9c94ab1536847b7c0  V64PPT
@@ -24,7 +30,10 @@ LIMITATIONS
 
 Four Vega GPUs per motherboard for XMR mining.  Risers and extenders working with some motherboards.
 
-The limitations has been upgraded to 6 GPUs with risers.
+The limitations have been upgraded to 6 GPUs with risers.
+
+The limitations have been upgraded to 8 GPUs with Colorful's motherboard without risers.
+
 
 Contact(s)
 

@@ -51,7 +51,7 @@ All commands are followed after "$"(for non-root user) "#"(for root user) charac
 And please do not get offended that I'm going through command by command.
 I'm writing for the inexperienced user.
 
-Assumption: The Ubuntu user is "jdoe".  Network has been configured.
+Assumption: The Ubuntu user is "jdoe".  Network has been configured and at least one Vega gpu is plugged in.
 
 $ sudo su -
 [sudo]  password for user jdoe: ********  <-- Enter your jdoe's password
@@ -63,126 +63,40 @@ passwd: password updated successfully
 logout
 $ su -
 Password: ********  <-- Enter your root's password that you have created above
-# apt-get update
-# apt-get install openssh-server
-# cd /etc/ssh
-Edit sshd_config and add or uncomment the following line and save it.  If you know what you re doing you may skip it.
-PermitRootLogin yes
 
-# reboot
+Make sure that network has been configured and connected.
+Download a zip file from GitHub.
+# cd
+# unzip VegaToolsNConfigs-master.zip
+# mv VegaToolsNConfigs-master VegaToolsNConfigs
+# mv VegaToolsNConfigs /root/
+If you clone the VegaToolsNConfigs, move the directory to /root/.
+Move all the files from config, tools and PPTDIR folders to VegaToolsNConfigs folder.
+# cd VegaToolsNConfigs
+# mv config/* .
+# mv tools/* .
+# mv PPTDIR/* .
 
-Rebooting...
+Make the scripts are runnable.
+# chmod 770 *.sh
+Copy/Download AMD driver amdgpu-pro-18*.tar.xz files to /root/Downloads/ directory
+Change "DRIVER_TO_RUN" to your amdgpu-pro-18.30 in /root/VegaToolsNConfigs/automateVUG.sh
+script if necessary.
+# cd VegaToolsNConfigs
+# ./autoConfigure.sh
 
-Log back into the system from console or from ssh terminal.
+SIT BACK, RELAX, and let the toool do the work!
 
-Check for sshd
-# service ssh status
-If it is not running execute next line
-# service ssh restart
+After each reboot, ssh into the machine as root and see the progress by typing.
+# tail -f stage.log
+During amdgpu-pro driver installation, sometimes it may stop at some line and you
+may not see the progress.  Be patient, most of the time the program is doing something.
+When it is done, the machine will turn itself off.
 
 
-# apt-get update
-# echo "vm.nr_hugepages = 128" >> /etc/sysctl.conf
-# reboot
+ADD ALL THE VIDEO CARDS HERE.
 
-Rebooting...
-
-Log back into the system from console or from ssh terminal.
-
-It is necessary to update during installation process.  Otherwise it may not work.
-# apt-get update
-The lm-sensors may be already installed.  Check it anyway.
-# apt-get install lm-sensors
-You may have to re-run the sensors-detect if you add a new video card. 
-# sensors-detect
-Say "YES" to every question.  Depends on your system, it may take a while.
-Download/acquire amdgpu-pro drivers listed in checklist.
-In my case they are in ~/Downloads directory. Replace it with your own directory.
-# cd ~/Downloads
-Install version 18.10 first.
-# tar -Jxvf amdgpu-pro-18.10-572953.tar.xz
-# cd amdgpu-pro-18.10-572953
-# ./amdgpu-pro-install -y --opencl=pal
-At the end of installation, ignore the following warning
-WARNING: amdgpu dkms failed for running kernel
-# reboot
-Rebooting...
-At this point your desktop may be unusable, the amdgpu-pro driver will likely show you just a cursor on your left top of the
-monitor.  That's why ssh server was instaled in the beginning.
-
-Log back into the system with ssh.
-It is necessary to update during installation process.  Otherwise it may not work.
-# apt-get update
-# apt-get install -y git libuv1-dev libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev opencl-headers
-# cd; mkdir git
-# cd git
-# git clone https://github.com/xmrig/xmrig-amd.git
-# ls
-# cd xmrig-amd
-# cd src/3rdparty
-# mv CL CL_original
-# ln -s /usr/include/CL CL
-# cd ..
-# find . -name "*.*" -exec grep -H "math.h" {} \;
-You will find the following...
-./workers/Hashrate.cpp:#include <math.h>
-./amd/OclGPU.cpp:#include <math.h>
-./api/ApiRouter.cpp:#include <math.h>
-./Cpu.cpp:#include <math.h>
-
-Change math.h to cmath.  I do not have the diff file.  It is safer to change them manually.
-# perl -i.bak -npe 's/math\.h/cmath/g' ./workers/Hashrate.cpp
-# perl -i.bak -npe 's/math\.h/cmath/g' ./amd/OclGPU.cpp
-# perl -i.bak -npe 's/math\.h/cmath/g' ./api/ApiRouter.cpp
-# perl -i.bak -npe 's/math\.h/cmath/g' ./Cpu.cpp
-
-Delete *.bak files
-# find . -name "*.bak" -exec rm -f {} \;
-
-Check and make sure they have been changed.
-# find . -name "*.*" -exec grep -H "cmath" {} \;
-./workers/Hashrate.cpp:#include <cmath>
-./workers/Workers.cpp:#include <cmath>
-./amd/OclGPU.cpp:#include <cmath>
-./api/ApiRouter.cpp:#include <cmath>
-./Cpu.cpp:#include <cmath>
-
-# find . -name "*.*" -exec grep -H "isnormal" {} \;
-./workers/Hashrate.cpp:    if (isnormal(h)) {
-./workers/Hashrate.cpp:        if (isnormal(data)) {
-./workers/Hashrate.cpp:   if (isnormal(highest) && highest > m_highest) {
-./api/ApiRouter.cpp:    if (!isnormal(d)) {
-
-# perl -i.bak -npe 's/isnormal\(/std\:\:isnormal\(/g' ./workers/Hashrate.cpp
-# perl -i.bak -npe 's/isnormal\(/std\:\:isnormal\(/g' ./api/ApiRouter.cpp
-# find . -name "*.*" -exec grep -H "std::isnormal" {} \;
-./workers/Hashrate.cpp:    if (std::isnormal(h)) {
-./workers/Hashrate.cpp:        if (std::isnormal(data)) {
-./workers/Hashrate.cpp:   if (std::isnormal(highest) && highest > m_highest) {
-./api/ApiRouter.cpp:    if (!std::isnormal(d)) {
-
-Delete *.bak files
-# find . -name "*.bak" -exec rm -f {} \;
-
-# cd ~/git/xmrig-amd/
-# mkdir build; cd build; cmake ..; make
-
-Modified the config.json downloaded from git hub.
-Now copy the your config.json file to the buid directory
-
-# cp /your/path/to/your/config.json .
-
-Now test the miner.  You should see around 1100 H/s at this stage.
-# ./xmrig-amd
-If not something went wrong.  The miner shoud be working.
-NOTE: If you get OpenCL device not found error just reboot the system.  It should work after that. 
-Kill the miner. Ctrl-C should work.  Otherwise open up another ssh session and kill it.
-Example:
-
-# ps -aef | grep xmrig
-root      7863  1237  4 02:19 pts/0    00:00:13 ./xmrig-amd
-root      7960  7948  0 02:24 pts/1    00:00:00 grep --color=auto xmrig
-# kill -9 7863 <-- this is the pid from above "ps"
+Restar the computer and log back into the system from console or from ssh terminal.
 
 Save your copy of xmrig-amd.
 # cd ~/git
@@ -190,51 +104,7 @@ Save your copy of xmrig-amd.
 
 Copy ~/xmrig-amdAMDGPro18d10.tgz to another machine as a back up if you do not want to do the same process again and again.
 
-Now uninstall amdgpu-pro18.10.
-# /usr/bin/amdgpu-pro-uninstall
-Say "yes" or "Y" to uninstall.
-# reboot
-
-Rebooting...
-Log back into the system from console or from ssh terminal.
-
-It is necessary to update during installation process.  Otherwise it may not work.
-# apt-get update
-
-In my case amdgpu-pro drivers are in ~/Downloads directory.   Replace it with your own directory.
-# cd ~/Downloads
-Install version 18.30 at this time. The reason 18.10 was installed first was for openCL communications with the miner and the
-Vega device.  The 18.30 broke the communications for now.  Until the miner and/or AMD fix it, this is the procedure.  The 18.30
-is needed because AMD added the voltage support in this version.
-# tar -Jxvf amdgpu-pro-18.30-633530.tar.xz 
-# cd amdgpu-pro-18.30-633530 
-# ./amdgpu-pro-install -y --opencl=pal
-
-# cd /etc/default
-# mv grub grub.original
-# cp grub.original grub
-# perl -i.bak -npe 's/quiet splash/quiet splash amdgpu.ppfeaturemask=0xffffffff/g' grub
-Confirm the change
-# cat grub | grep amdgpu
-
-# update-grub
-# poweroff 
-
-ADD ALL THE VIDEO CARDS HERE.
-
-Restar the computer and log back into the system from console or from ssh terminal.
-
-It is necessary to update during installation process.  Otherwise it may not work.
-# apt-get update
-
-Move all the files from config, tools and PPTDIR folders to VegaToolsNConfigs folder.
-# cd VegaToolsNConfigs
-# mv config/* .
-# mv tools/* .
-# mv PPTDIR/* .
-
-Make the scripts runnable.
-# chmod 770 *.sh
+Edit config.json and run the miner.
 
 NOTE: IF YOU DO NOT KNOW HOW TO RUN THE SCRIPTS, JUST TYPE IN THE SCRIPT AND PRESS ENTER.
 EXAMPLE:
