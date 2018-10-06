@@ -44,11 +44,18 @@
 # $ su -
 # Password: ********  <-- Enter your root's password that you have created above
 # Download amdgpu-pro drivers  and put them in /root/Downloads
-# 
+# NOTE: the tar.xz file name is the same for amdgpu-pro 18.30 for Ubuntu 18.04.1 and Ubuntu 16.04.5
+# For Ubuntu MATE 18.04.1
 # amdgpu-pro-18.30-633530.tar.xz for Ubuntu 18.04.1 
 # or
-# amdgpu-pro-18.30-641594.tar.xz for Ubuntu 18.04.1 
+# amdgpu-pro-18.30-641594.tar.xz for Ubuntu 18.04.1
+
+# For Ubuntu MATE 16.04.5
+# amdgpu-pro-18.30-641594.tar.xz for Ubuntu 16.04.5
+
 # URL: https://www2.ati.com/drivers/
+
+# Use the same amdgpu-pro 18.10 driver for both Ubuntu 18.04.1 and Ubuntu 16.04.5
 # amdgpu-pro-18.10-572953.tar.xz for Ubuntu 16.04.4
 # URL: https://support.amd.com/en-us/kb-articles/Pages/Radeon-Software-for-Linux-18.10-Release-Notes.aspx
 # Make sure that network has been configured and connected.
@@ -101,6 +108,7 @@ KILL=/bin/kill
 PERL=/usr/bin/perl
 UPDATEGRUB=/usr/sbin/update-grub
 POWEROFF=/sbin/poweroff
+WC=/usr/bin/wc
 
 FNDNAME=$( ${FIND} /root -name "autoConfigure.sh" | ${GREP} Configure | ${TAIL} -n 1 )
 
@@ -128,6 +136,11 @@ then
   ${ECHO} "apt-get updated..." 
   ${APTGET} install -y openssh-server
   ${ECHO} "ssh server installed..." 
+  WCCOUNT=$( ${CAT} /etc/ssh/sshd_config | ${GREP} "^PermitRootLogin" | ${WC} -l )
+  if [ $WCCOUNT != 0 ]; then
+    ${ECHO} "Commenting out the existing rule..."
+    ${PERL} -i.bak -npe 's/^PermitRootLogin/\#PermitRootLogin/g' /etc/ssh/sshd_config 
+  fi
   ${ECHO} "PermitRootLogin yes" >> /etc/ssh/sshd_config
   ${ECHO} "sshd_config updated..." 
   ${ECHO}  "vm.nr_hugepages = 128" >> /etc/sysctl.conf
