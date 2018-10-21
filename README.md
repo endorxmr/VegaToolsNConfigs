@@ -1,7 +1,14 @@
 # VegaToolsNConfigs
 AMD Vega GPU tools and configuration file(s) for Monero(XMR) mining.
 
-VegaUbuntuGuide - How to manually setup Vega mining in Ubuntu.
+
+# NOTE:
+This guide will work with most cryptonight V7 coins at Windows level hash rate(s).  Most cryptonight V8 miners will not work with 18.30 driver.  Please use cast-xmr for the time being.  The hash rate is around 1250 H/s for XMR.  If you want to use xmrig-amd or xmr-stak, use ROCm 1.9.1+.  UPDATE: The cast-xmr with Vega 56/64/FE will get you 1600/1870/1960 H/s on --intensity=10/10/9(default is 7).  The xmrig-amd and xmr-stak are still at 1250H/s for V8.
+
+VegaUbuntuGuide - How to manually setup Vega mining in Ubuntu for CryptoNight V7.
+
+VegaUbuntuGuide4CryptoNightV8 - How to manually setup Vega mining in Ubuntu for CryptoNight V8.
+
 
 Working Ubuntu Versions:
 
@@ -33,7 +40,8 @@ tools/rigmonitor folder - contains rig monitoring scripts using passwordless ssh
 Binary file checksums:
 1.   b959ad1ffd296a8c5c75d1eb9e11e467  V56PPT
 2.   4c9fc25157f392e9c94ab1536847b7c0  V64PPT
-3.   e30d9cd42cfe2190e263cd7f04aaef6f  SoftPPT-1.0.0.jar
+3.   ed13313360a2a4306e11a62afd111ace  V64V8PPT
+4.   e30d9cd42cfe2190e263cd7f04aaef6f  SoftPPT-1.0.0.jar
 
 LIMITATIONS
 
@@ -46,11 +54,15 @@ The limitations have been upgraded to 8 GPUs with Colorful's motherboard without
 
 Tested coins:
 
-    Cryptonight V7:
+    CryptoNightV7(CNV1):
 
-        Monero(XMR)
+        Monero(XMR)(Updated to CNV2)
 
         GRAFT
+
+    CryptoNightV8(CNV2):
+
+        Monero(XMR)
 
 
 Contact(s)
