@@ -12,19 +12,20 @@
     "background": false,
     "cache": true,
     "colors": true,
-    "donate-level": 1,
-    "log-file": "/var/log/hashrate.log",
+    "donate-level": 1, 
+    "log-file": null,
     "opencl-platform": "AMD",
     "opencl-loader": "libOpenCL.so",
     "pools": [
         {
-            "url": "pool.monero.hashvault.pro:7777",
-            "user": "YOUR_WALLET_ID",
-            "pass": "x",
+            "url": "pool.hashvault.pro:7777",
+            "user": "YOUR_WALLET_ADDRESS",
+            "pass": "YOUR_MACHINE_WORKER_NAME",
             "rig-id": null,
             "nicehash": false,
             "keepalive": false,
             "variant": -1,
+            "enabled": true,
             "tls": false,
             "tls-fingerprint": null
         }
@@ -35,7 +36,7 @@
     "threads": [
         {
             "index": 0,
-            "intensity": 2016,
+            "intensity": 1024,
             "worksize": 16,
             "strided_index": 2,
             "mem_chunk": 2,
@@ -45,7 +46,27 @@
         },
         {
             "index": 0,
-            "intensity": 2016,
+            "intensity": 1024,
+            "worksize": 16,
+            "strided_index": 2,
+            "mem_chunk": 2,
+            "unroll": 8,
+            "comp_mode": false,
+            "affine_to_cpu": false
+        },
+        {
+            "index": 1,
+            "intensity": 1024,
+            "worksize": 16,
+            "strided_index": 2,
+            "mem_chunk": 2,
+            "unroll": 8,
+            "comp_mode": false,
+            "affine_to_cpu": false
+        },
+        {
+            "index": 1,
+            "intensity": 1024,
             "worksize": 16,
             "strided_index": 2,
             "mem_chunk": 2,
@@ -56,5 +77,5 @@
     ],
     "user-agent": null,
     "syslog": false,
-    "watch": false
+    "watch": true
 }

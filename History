@@ -1,3 +1,55 @@
+5/7/2019
+Added OptimalRunningSequencesForRadeonVII.
+Added config.json_RVII xmrig-amd config file in VegaToolsNConfigs/config folder.
+
+4/23/2019
+Added rig monitoring support for nanominer and GrinPro miner for grin coin(Cuckaroo29).
+
+4/22/2019
+Added GPU folder for differente gpus and related information.
+Added Radeon VII gpu.
+Added REFRVIIPPT and REFRVIIPPTTEXT soft PPT related files to config/PPTDIR folder.
+
+3/19/2019
+Updated OptimalRunningSequencesForRX470 and OptimalRunningSequencesForVegas for CNr/CNrwz.
+
+3/18/2019
+Added VegaUbuntuQuickGuideForCNrCNrwz and VegaUbuntuGuideForCNrCNrwz.
+
+3/17/2019
+Added VegaCentOSGuideForCNrCNrwz.
+
+3/11/2019
+Added RadeonProDuoCNrCNrwzQuickGuide and config.json_RadeonProDuoCNrCNrwz files.
+
+3/6/2019
+Added rig monitoring support for xmrig-amd, xmr-stak, cast-xmr, teamredminer and claymore duel miner for ethereum.
+Changed hash rate location to /var/log/hashrate.log.
+
+1/24/2019
+Added RX470UbuntuGuideForCNv2 and OptimalRunningSequencesForRX470.
+Added RX470.data_P7P1NoOC to config directory.
+
+12/21/2018
+Added Biostar TB250-BTC D+ Mining Motherboard to TestedHardware.txt.
+
+11/29/2018
+Added hash rate display for single gpu for TeamRedMiner in tools/rigmonitor/gpuStats.sh.
+
+11/25/2018
+Added VegaCentOSGuideForCNv2.
+Updated OptimalRunningSequencesForVegas.
+
+11/23/2018
+Updated the following files/folders.
+VegaUbuntuQuickGuideForCNv2
+VegaUbuntuGuideForCNv2
+The rigmonitor folder to include TeamRedMiner.
+OptimalRunningSequencesForVegas
+
+11/21/2018
+Added LGMV56PPT - Soft PPT for Vega 56 with lower grade memory (CNv1 and CNv2) to PPTDIR folder.
+
 11/05/2018
 Added config.json_RadeonProDuoR9390XCNv2 xmrig-amd config file to config folder.
 Added RadeonProDuo_R9390XQuickGuide.

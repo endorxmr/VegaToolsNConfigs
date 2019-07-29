@@ -1,0 +1,98 @@
+WARNING!!!!!!!
+THE OPTIMIZED SETTING(S) IS/AR WORKING FORM MY SETUP(S).
+IT MAY NOT BE OPTIMIZED FOR YOUR MOTHERBOARD, CPU, RAM, GPU COMBINATION.
+THE XMRMINER01102018 IS NOT RESPONSIBLE FOR ANY DAMAGE THAT MAY HAVE CAUSED BY FOLLOWING THIS GUID.
+USE IT AT YOUR OWN RISK/DISCRETION. PLEASE READ THE WHOLE DOCUMENT FIRST BEFOR DOING ANYTHING.
+
+NOTE: The following miners/settings were tested with the following RX470(s).
+Sapphire VCX 11256-28-21G Radeon RX 470 4GB GDDR5 PCI Express DVI-D - OEM
+MSI RX 470 ARMOR OC 8 GB GDDR5 PCI Express DVI-D - OEM
+Both of them yeild the best result(s) when using the following configuration(s).
+
+TeamRedMiner (CNv2/CNr/CNrwz)
+------------
+For RX470 with Micron, Hynix and Samsung memory
+
+Single GPU
+STEP1:
+Replace RX470.data_P7P1NoOC with RX470.data_P7P1NoOCS(Sapphire RX470) and RX470.data_P7P1NoOCM(MSI RX470)
+./setSMClockVoltages.sh  0 RX470.data_P7P1NoOC skip
+
+./setAMDGPUFanSpeed.sh -g 0 -s 65
+
+STEP2:
+Run the miner
+CNv2:
+./teamredminer -a cnv8 -o stratum+tcp://pool.monero.hashvault.pro:7777 -u YOUR_WALLET_ID -p RIG_NAME -d 0 --cn_config 8+7
+CNr:
+./teamredminer -a cnr -o stratum+tcp://pool.monero.hashvault.pro:7777 -u YOUR_WALLET_ID -p RIG_NAME -d 0 --cn_config 8+7
+CNrwz:
+./teamredminer -a cnv8_rwz -o stratum+tcp://pool.monero.hashvault.pro:7777 -u YOUR_WALLET_ID -p RIG_NAME -d 0 --cn_config 8+7
+
+
+Multiple GPUs
+STEP1:
+Replace RX470.data_P7P1NoOC with RX470.data_P7P1NoOCS(Sapphire RX470) and RX470.data_P7P1NoOCM(MSI RX470)
+./setSMClockVoltages.sh  0 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  1 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  2 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  3 RX470.data_P7P1NoOC skip
+./setAMDGPUFanSpeed.sh -g 0,1,2,3 -s 65
+
+STEP2:
+Run the miner
+./teamredminer -a cnv8 -o stratum+tcp://pool.monero.hashvault.pro:7777 -u YOUR_WALLET_ID -p RIG_NAME -d 0,1,2,3 --cn_config 8+7,8+7,8+7,8+7
+
+CAST-XMR (CNv2)
+---------
+For RX470 with Micron, Hynix and Samsung memory
+
+Single GPU
+STEP1:
+./setSMClockVoltages.sh  0 RX470.data_P7P1NoOC skip
+./setAMDGPUFanSpeed.sh -g 0 -s 65
+
+STEP2:
+Run the miner
+./cast_xmr-vega --algo=-1 -S pool.monero.hashvault.pro:7777 -u YOUR_WALLET_ID -p RIG_NAME -G 0 $*
+
+Multiple GPUs
+STEP1:
+./setSMClockVoltages.sh  0 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  1 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  2 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  3 RX470.data_P7P1NoOC skip
+./setAMDGPUFanSpeed.sh -g 0,1,2,3 -s 65
+
+STEP2:
+Run the miner
+./cast_xmr-vega --algo=-1 -S pool.monero.hashvault.pro:7777 -u YOUR_WALLET_ID -p RIG_NAME -G 0,1,2,3 $*
+
+
+xmrig-amd (CNv2/CNr/CNrwz)
+---------
+For RX470 with Micron, Hynix and Samsung memory
+
+Single GPU
+STEP1:
+Replace RX470.data_P7P1NoOC with RX470.data_P7P1NoOCS(Sapphire RX470) and RX470.data_P7P1NoOCM(MSI RX470)
+./setSMClockVoltages.sh  0 RX470.data_P7P1NoOC skip
+./setAMDGPUFanSpeed.sh -g 0 -s 65
+
+STEP2:
+Run the miner
+./xmrig-amd
+
+Multiple GPUs
+STEP1:
+Replace RX470.data_P7P1NoOC with RX470.data_P7P1NoOCS(Sapphire RX470) and RX470.data_P7P1NoOCM(MSI RX470)
+./setSMClockVoltages.sh  0 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  1 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  2 RX470.data_P7P1NoOC skip
+./setSMClockVoltages.sh  3 RX470.data_P7P1NoOC skip
+./setAMDGPUFanSpeed.sh -g 0,1,2,3 -s 65
+
+STEP2:
+Run the miner
+./xmrig-amd
+
